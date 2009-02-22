@@ -1,0 +1,102 @@
+merb_form_fields
+================
+
+A plugin for the Merb framework that provides a Form Builder that wraps each of your fields. 
+
+It provides validation on the wrapper (adds a class), and will insert the error message automatically.
+
+= form_with_fields_for(@user) do
+  = text_field :first_name
+
+is equivalent to:
+<form ...>
+  <div class="field text_field">
+    <input type="text" name="user_first_name" ... />
+  </div>
+</form>
+
+If there an error on first name it will render:
+<form ...>
+  <div class="field text_field error">
+    <input type="text" name="user_first_name" ... />
+    <em class='error'>First Name is required.</em>
+  </div>
+</form>
+
+Customize Fields with the :field option (takes a hash)
+= text_field :first_name, :field => {:class => "my_field_class", :id => "field_id"}
+
+Customize the error message with the :error option (overrides the default model error)
+= text_field :first_name, :error => "Bzzzzt... wrong!"
+
+
+All render options are easily configurable via Merb::Plugins.config[:merb_form_fields]
+
+Field Tag
+---------
+  Merb::Plugins.config[:merb_form_fields][:field_tag]
+  defaults to :div
+  
+  this defines which tag is used for the field wrapper. 
+  e.g. <div class="field ...">...</div>
+  if you set it to :li, it would render as <li class="field ...">...</li>
+
+
+Field Class
+------------
+  Merb::Plugins.config[:merb_form_fields][:field_tag]
+  defaults to "field"
+  
+  this defines the class used by default for the field wrapper. 
+  e.g. <div class="field ...">...</div>
+  if you set it to "wrapper", it would render as <div class="wrapper ...">...</div>
+
+
+Field Error Class
+-----------------
+  Merb::Plugins.config[:merb_form_fields][:field_error_class]
+  defaults to "error"
+  
+  this defines the class used on the field wrapper when the field is invalid.
+  e.g. <div class="field error ...">...</div>
+  if you set it to "invalid", it would render as <div class="field invalid ...">...</div>
+
+
+Error Message Tag
+------------------
+  Merb::Plugins.config[:merb_form_fields][:error_message_tag]
+  defaults to :em
+
+  this is the tag that is displayed inside the field. 
+  e.g. <em class='error'>First Name is required.</em>
+  If you set it to :span, it would display as <span class='error'>...</span>
+
+
+Error Message Class
+-------------------
+  Merb::Plugins.config[:merb_form_fields][:error_message_class]
+  defaults to "error"
+  
+  this is the class that is used for the error messages displayed inside a field. 
+  e.g. <em class='error'>First Name is required.</em>
+  If you set it to "invalid", it would display as <em class='invalid'>...</em>
+  
+
+Add Field Type Class Option
+----------------------------
+  Merb::Plugins.config[:merb_form_fields][:add_field_type_class?]
+  defaults to true
+
+  if this option is enabled, it will add the field_type as a class to the field wrapper
+  e.g. <div class="field text_field ...">....</div>
+  if you set it to false, it would render without the field_type <div class="field ...">....</div>
+
+
+Skipped Field Types
+------------------
+  Merb::Plugins.config[:merb_form_fields][:skipped_field_types]
+  defaults to [:hidden_field, :check_box, :radio_button]
+  
+  Field types defined in this list will not be wrapped with a field wrapper
+  You can force the field wrapper to show by passing :field => {:force => true} on your field
+  You can prevent the field wrapper from showing by passing :field => {:skip => true} on your field
