@@ -3,6 +3,10 @@ merb_form_fields
 
 A plugin for the Merb framework that provides a Form Builder that wraps each of your fields. 
 
+to install
+dependency "merb_form_fields"
+
+
 It provides validation on the wrapper (adds a class), and will insert the error message automatically.
 
 = form_with_fields_for(@user) do
@@ -28,6 +32,9 @@ Customize Fields with the :field option (takes a hash)
 
 Customize the error message with the :error option (overrides the default model error)
 = text_field :first_name, :error => "Bzzzzt... wrong!"
+
+Customize the note for the field
+= text_field :first_name, :note => "Give us your first name"
 
 
 All render options are easily configurable via Merb::Plugins.config[:merb_form_fields]
@@ -61,6 +68,24 @@ Field Error Class
   e.g. <div class="field error ...">...</div>
   if you set it to "invalid", it would render as <div class="field invalid ...">...</div>
 
+Note Tag
+---------
+  Merb::Plugins.config[:merb_form_fields][:note_tag]
+  defaults to :span
+
+  this defines which tag is used for the note wrapper. 
+  e.g. <span class="note">...</span>
+  if you set it to :em, it would render as <em class="note ...">...</em>
+
+
+Note Class
+------------
+  Merb::Plugins.config[:merb_form_fields][:note_class]
+  defaults to "note"
+
+  this defines the class used by default for the note wrapper. 
+  e.g. <span class="note">...</span>
+  if you set it to "explain", it would render as <span class="explain">...</span>
 
 Error Message Tag
 ------------------

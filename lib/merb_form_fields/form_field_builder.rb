@@ -19,6 +19,17 @@ module MerbFormFields
     def field_class
       Merb::Plugins.config[:merb_form_fields][:field_class] || "field"
     end
+    
+    # This tag wraps the note
+    def note_tag
+      Merb::Plugins.config[:merb_form_fields][:note_tag] || :span
+    end
+
+    # This is the default note class
+    def note_class
+      Merb::Plugins.config[:merb_form_fields][:note_class] || "note"
+    end
+    
 
     # whether or not to add the field_type class
     def add_field_type_class?
@@ -39,6 +50,7 @@ module MerbFormFields
     # ---------------------------------------------
     def field_wrapper(field_type, attrs = {})
       field_options = attrs.delete(:field) || {}
+      note = attrs.delete(:note)
       error_override = attrs.delete(:error)
 
       # build inner field html (using the passed in block) 
@@ -57,9 +69,14 @@ module MerbFormFields
         css_class << " #{error_class}"
       end
 
+      # build note
+      unless note.blank?
+        note_wrapper = tag note_tag,
+                           note, :class => note_class
+
       # build field
       tag field_tag,
-          "#{inner_html}#{field_error_message(@obj, attrs[:method], error_override)}",
+          "#{inner_html}#{field_error_message(@obj, attrs[:method], error_override)}#{note_wrapper}",
           field_options.merge(:class => css_class)
     end
 
