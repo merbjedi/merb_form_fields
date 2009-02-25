@@ -5,7 +5,7 @@ require 'merb-core'
 require 'merb-core/tasks/merb'
 
 GEM_NAME = "merb_form_fields"
-GEM_VERSION = "0.0.3"
+GEM_VERSION = "0.0.4"
 AUTHOR = "Jacques Crocker"
 EMAIL = "merbjedi@gmail.com"
 HOMEPAGE = "http://github.com/merbjedi/merb_form_fields"

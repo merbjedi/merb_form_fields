@@ -70,13 +70,11 @@ module MerbFormFields
       end
 
       # build note
-      unless note.blank?
-        note_wrapper = tag note_tag,
-                           note, :class => note_class
+      note_html = tag(note_tag, note, :class => note_class) unless note.blank?
 
       # build field
       tag field_tag,
-          "#{inner_html}#{field_error_message(@obj, attrs[:method], error_override)}#{note_wrapper}",
+          "#{inner_html}#{field_error_message(@obj, attrs[:method], error_override)}#{note_html}",
           field_options.merge(:class => css_class)
     end
 
